@@ -89,6 +89,5 @@ class MemberController extends Controller
         $this->data['transactions'] = $stockAssignment;
         $this->data['member'] = $member;
         return view('member.member_stocks_foradmin',$this->data);
-        
     }
 }

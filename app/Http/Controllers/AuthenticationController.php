@@ -36,7 +36,11 @@ class AuthenticationController extends Controller
                     $request->session()->put('member_code',$member->member_code);
                     $request->session()->put('is_admin',$member->is_admin);
                     $this->response['status'] = TRUE;$this->response['message'] = "Login success..!!!";
-                    $this->response['redirect_url'] = route('dashboard');
+                    if ($member->is_admin == 1) {
+                        $this->response['redirect_url'] = route('dashboard');
+                    } else {
+                        $this->response['redirect_url'] = route('member_dashboard');
+                    }
                 } else {
                     $this->response['status'] = FALSE;
                     $this->response['message'] = "Member code and password is not match.";

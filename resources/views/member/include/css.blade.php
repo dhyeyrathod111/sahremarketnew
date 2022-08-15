@@ -10,3 +10,9 @@
 <link rel="stylesheet" href="{{ asset('public/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css') }}">
 <link rel="stylesheet" href="{{ asset('public/assets/vendor/charts/c3charts/c3.css') }}">
 <link rel="stylesheet" href="{{ asset('public/assets/vendor/fonts/flag-icon-css/flag-icon.min.css') }}">
+<style type="text/css">
+	.headerfootercolor {
+		background: yellowgreen !important;
+    	color: black !important;
+	}
+</style>

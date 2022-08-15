@@ -23,23 +23,13 @@ class DashboardController extends Controller
             $this->data['member_counter'] = \App\Member::where('is_admin',0)->count();
             return view('member.admin_dashboard',$this->data);
         } else {
-            if (!empty($request->filter) && $request->filter == 1) {
-                $start_date = \Carbon\Carbon::parse($request->start_date)->toDateTimeString();
-                $end_date = \Carbon\Carbon::parse($request->end_date)->toDateTimeString();
-                $stockAssignment = \App\StockAssignment::where('member_code',$member->member_code)->whereBetween('date',[$start_date,$end_date])->paginate(
-                    $perPage = 10000, $columns = ['*'], $pageName = 'pagination'
-                );
-                if (!empty($stockAssignment)) {
-                    $this->data['calculation'] = $this->calculated_stack($stockAssignment);
-                }
-            } else {
-                $stockAssignment = \App\StockAssignment::where('member_code',$member->member_code)->paginate(
-                    $perPage = config('app.pagination_limit'), $columns = ['*'], $pageName = 'pagination'
-                );
-            }
-            $this->data['transactions'] = $stockAssignment;
-            return view('member.dashboard',$this->data);
+            if ($member->is_admin != 1) return redirect()->route('member_dashboard');
         }
+    }
+    public function member_dashboard(Request $request)
+    {
+        $this->data['member'] = \App\Member::find($request->session()->get('member_id'));
+        return view('member.member_dashboard',$this->data);
     }
     public function logoutmember(Request $request)
     {
@@ -94,9 +84,12 @@ class DashboardController extends Controller
         } else {
             $stockAssignment = \App\StockAssignment::where('member_code',$member->member_code)->get();
         }
-        $html = view('member.mpdf_data',['transection'=>$stockAssignment,'calculation' => $calculation ])->render();
-        $mpdf->WriteHTML($html);
-        $mpdf->Output($member->member_code.".pdf",'D');
+        $html = view('member.mpdf_data',[
+            'member' => $member,
+            'transection'=>$stockAssignment,
+            'calculation' => !empty($calculation) ? $calculation : NULL 
+        ])->render();
+        $mpdf->WriteHTML($html);$mpdf->Output($member->member_code.".pdf",'D');
     }
     public function calculated_stack($stockdata)
     {
@@ -124,5 +117,26 @@ class DashboardController extends Controller
         $number_string = str_replace(',', '', $number_string);
         $number_string = trim($number_string);
         return floatval($number_string);
+    }
+    public function member_tradereport(Request $request)
+    {
+        $member = \App\Member::find($request->session()->get('member_id'));
+        $this->data['member'] = $member;
+        if (!empty($request->filter) && $request->filter == 1) {
+            $start_date = \Carbon\Carbon::parse($request->start_date)->toDateTimeString();
+            $end_date = \Carbon\Carbon::parse($request->end_date)->toDateTimeString();
+            $stockAssignment = \App\StockAssignment::where('member_code',$member->member_code)->whereBetween('date',[$start_date,$end_date])->paginate(
+                $perPage = 10000, $columns = ['*'], $pageName = 'pagination'
+            );
+            if (!empty($stockAssignment)) {
+                $this->data['calculation'] = $this->calculated_stack($stockAssignment);
+            }
+        } else {
+            $stockAssignment = \App\StockAssignment::where('member_code',$member->member_code)->paginate(
+                $perPage = config('app.pagination_limit'), $columns = ['*'], $pageName = 'pagination'
+            );
+        }
+        $this->data['transactions'] = $stockAssignment;
+        return view('member.member_tradereport_view',$this->data);
     }
 }

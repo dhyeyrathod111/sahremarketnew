@@ -4,7 +4,11 @@
 
 <div class="splash-container">
     <div class="card ">
-        <div class="card-header text-center"><a href="{{ route('login') }}"><img class="logo-img" src="{{ asset('public/assets/images/logo.png') }}" alt="logo"></a><span class="splash-description">Please enter your user information.</span></div>
+        <div class="card-header text-center">
+            <h2>Sign in</h2>
+            <!-- <a href="{{ route('login') }}"><img class="logo-img" src="{{ asset('public/assets/images/logo.png') }}" alt="logo"></a> -->
+            <span class="splash-description">Please enter your information.</span>
+        </div>
         <div class="card-body">
             <div id="alert_message"></div>
             @if(session()->has('message'))
@@ -20,11 +24,11 @@
                 <div class="form-group">
                     <input autocomplete="off" name="password" class="form-control form-control-lg" id="password" required="" type="password" placeholder="Proton code">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="custom-control custom-checkbox">
                         <input autocomplete="off" class="custom-control-input" type="checkbox"><span class="custom-control-label">Remember Me</span>
                     </label>
-                </div>
+                </div> -->
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
             </form>
         </div>

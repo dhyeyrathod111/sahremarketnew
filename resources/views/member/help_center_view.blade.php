@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="dashboard-wrapper">
+    @include('member.include.banner')
     <div class="influence-profile">
         <div class="container-fluid dashboard-content">
             <!-- ============================================================== -->

@@ -1241,10 +1241,10 @@ Top Header
     font-size: 30px;
     text-transform: uppercase;
     font-weight: 700;
-    color: #007bff;
+    color: #997a5b;
 }
 .navbar-brand:hover{
-    color: #007bff;
+    color: #997a5b;
 }
 .navbar-right-top {}
 
@@ -1948,7 +1948,7 @@ Container / Wrapper
 }
 
 .dashboard-content {
-    padding: 30px 30px 60px 30px;
+    padding: 30px 30px 0px 30px;
 }
 
 
@@ -6818,7 +6818,7 @@ Media Query
 
 @media only screen and (max-width:768px) {
     .dashboard-content {
-    padding: 20px 20px 60px 20px;
+    padding: 20px 20px 0px 20px;
 }
     .nav-left-sidebar .navbar a {
         color: #fff;
@@ -6888,7 +6888,7 @@ Media Query
 
 @media only screen and (max-width:480px) {
     .dashboard-content {
-    padding: 20px 20px 60px 20px;
+    padding: 20px 20px 0px 20px;
 }
     .nav-left-sidebar .navbar a {
         color: #fff;
@@ -7254,4 +7254,21 @@ Media Query
     100% {
         -moz-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
     }
+}
+
+
+
+.applybackground{
+    background: #333f4f;
+    color: white !important;
+    padding: 10px
+}
+
+.applybackground h6 {
+    color: #997a5b !important;
+    margin-bottom: 3px !important;
+}
+
+.applybackground h3 {
+    color: #997a5b !important; 
 }

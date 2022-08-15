@@ -45,6 +45,10 @@ Route::post('/member/password_reset_process', 'AuthenticationController@password
 Route::middleware(['checkmemberauth'])->group(function () {
 
 	Route::get('/member/dashboard','DashboardController@index')->name('dashboard');
+	Route::get('/member/member_dashboard','DashboardController@member_dashboard')->name('member_dashboard');
+	
+	Route::get('/member/member_tradereport','DashboardController@member_tradereport')->name('member_tradereport');
+
 	Route::get('/member/logout','DashboardController@logoutmember')->name('logout');
 	Route::get('/member/help_center','DashboardController@help_center')->name('help_center');
 	Route::post('/member/help_center_process','DashboardController@help_center_process')->name('help_center_process');
@@ -67,6 +71,8 @@ Route::middleware(['checkmemberauth'])->group(function () {
 	Route::get('/member/update_single_stock','StockAssignmentController@update_single_stock')->name('update_single_stock');
 	Route::post('/member/update_single_stock_process','StockAssignmentController@update_single_stock_process')->name('update_single_stock_process');
 
+
+	Route::get('/member/show_ledger_member','MemberledgerController@show_ledger_member')->name('show_ledger_member');
 
 });
 

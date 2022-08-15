@@ -4,6 +4,7 @@
 @section('content')
 
 <div class="dashboard-wrapper">
+    @include('member.include.banner')
     <div class="container-fluid dashboard-content ">
         <div class="ecommerce-widget">
             <div class="row">

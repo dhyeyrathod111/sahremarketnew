@@ -17,10 +17,12 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class StockAssignmentController extends Controller
 {
     protected $data ;protected $response ;protected $memberwallet;protected $transection;
-    
+    protected $ledgercontroller;
+
     public function __construct()
     {
         $this->data = [];$this->response = [];
+        $this->membreledger = new \App\Http\Controllers\MemberledgerController;
     }
     /**
      * Display a listing of the resource.
@@ -40,7 +42,8 @@ class StockAssignmentController extends Controller
      */
     public function store_excel_forbackup($getFile)
     {
-        $filestore = new \App\UploadedFiles;$filestore->file_path = $getFile->store('/');
+        $folder_name = date('d_m_Y', time());
+        $filestore = new \App\UploadedFiles;$filestore->file_path = $getFile->store("/".$folder_name."/");
         $filestore->save();
     }
     public function create(Request $request)
@@ -53,16 +56,19 @@ class StockAssignmentController extends Controller
             $this->response['status'] = FALSE;
             $this->response['message'] = implode("<br />",$validator->messages()->all());
         } else {
-            try {$success_upload = [];$error_upload = [];\App\StockAssignment::query()->truncate();
+            try {$success_upload = [];$error_upload = [];\App\StockAssignment::query()->truncate();\App\Memberledger::query()->truncate();
                 $the_file = $request->file('master_data');
                 $spreadsheet = IOFactory::load($the_file->getRealPath());
                 foreach ($spreadsheet->getSheetNames() as $key => $oneSpreadsheet) :
-                    $getActiveSheet = $spreadsheet->getSheet($key);
-                    $import_response = $this->import_active_sheet($getActiveSheet, $request->member_id, $oneSpreadsheet);
-                    if ($import_response == TRUE) {
-                        array_push($success_upload,$oneSpreadsheet);
-                    } else {
-                        array_push($error_upload,$oneSpreadsheet);
+                    if ($oneSpreadsheet != 'Report') {
+                        $getActiveSheet = $spreadsheet->getSheet($key);
+                        $import_response = $this->import_active_sheet($getActiveSheet, $request->member_id, $oneSpreadsheet);
+                        $create_ledger = $this->membreledger->create_memberledger($getActiveSheet, $request->member_id, $oneSpreadsheet);
+                        if ($import_response == TRUE) {
+                            array_push($success_upload,$oneSpreadsheet);
+                        } else {
+                            array_push($error_upload,$oneSpreadsheet);
+                        }
                     }
                 endforeach;
                 if (count($success_upload) == $spreadsheet->getSheetCount() && count($error_upload) == 0) {
@@ -82,14 +88,14 @@ class StockAssignmentController extends Controller
     private function import_active_sheet($activeSheet, $member_id, $member_code)
     {
         $spreadsheet_array = $activeSheet->toArray();
-        unset($spreadsheet_array[0]);unset($spreadsheet_array[1]);unset($spreadsheet_array[2]);
+        unset($spreadsheet_array[0]);unset($spreadsheet_array[1]);unset($spreadsheet_array[2]);unset($spreadsheet_array[3]);
         $member = \App\Member::where('member_code',$member_code)->first();
         if (!empty($member)) {
             $member_id = $member->id;
         } else {
             $member_id = NULL;
         }
-        $error_stack = [];$excelKeyStart = 4;
+        $error_stack = [];$excelKeyStart = 5;
         foreach ($spreadsheet_array as $key  => $oneColumn) :
             if (!empty($oneColumn[0]) && !empty($oneColumn[1])) :
                 $newtransection = new \App\StockAssignment;
