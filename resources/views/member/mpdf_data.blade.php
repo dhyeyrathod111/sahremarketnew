@@ -25,9 +25,9 @@
         <tr style="border: none;text-align: center; background: #ffd966">
             <td style="border: none;padding: 5px">Client Code</td>
             <td style="border: none;padding: 5px">Proton Code</td>
-            <td style="border: none;padding: 5px">Opening Qty</td>
+            <td style="border: none;padding: 5px">Opening Quantity</td>
             <td style="border: none;padding: 5px">Ledger Size</td>
-            <td style="border: none;padding: 5px">Opening Bal</td>
+            <td style="border: none;padding: 5px">Opening Balance</td>
         </tr>
         <tr style="border: none;text-align: center;background: #ae9a24">
             <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->member_code }}</td>
@@ -38,18 +38,19 @@
         </tr>
     </table>
     
-	<table class="table">
+	<table class="table m-0">
         <thead>
             <tr>
-                <th>date</th>
-                <th>trade id</th>
-                <th>position</th>
-                <th>entry</th>
-                <th>exit</th>
-                <th>net exit</th>
-                <th>amount</th>
-                <th>opening balance</th>
-                <th>closing balance</th>
+                <th style="background: #011e58; color: white">Date</th>
+                <th style="background: #011e58; color: white">Trade id</th>
+                <th style="background: #011e58; color: white">Position</th>
+                <th style="background: #011e58; color: white">Quantity</th>
+                <th style="background: #011e58; color: white">Entry</th>
+                <th style="background: #011e58; color: white">Exit</th>
+                <th style="background: #011e58; color: white">Net Exit</th>
+                <th style="background: #011e58; color: white">Amount</th>
+                <th style="background: #011e58; color: white">Opening Balance</th>
+                <th style="background: #011e58; color: white">Closing Balance</th>
                 <!-- <th>time</th> -->
                 <!-- <th>brokrage</th> -->
             </tr>
@@ -60,33 +61,32 @@
                 <td>{{ date('d-m-Y', strtotime($onetransection->date)) }}</td>
                 <td>{{ $onetransection->trade_id }}</td>
                 <td>{{ $onetransection->position }}</td>
+                <td>{{ $onetransection->quantity }}</td>
                 <td>{{ round($onetransection->stock_entry,2) }}</td>
                 <td>{{ round($onetransection->stock_exit,2) }}</td>
                 <td>{{ round($onetransection->net_exit,2) }}</td>
                 <td>{{ $onetransection->amount }}</td>
                 <td>{{ $onetransection->opening_balance }}</td>
                 <td>{{ $onetransection->closing_balance }}</td>
-                <!-- <td>{{ $onetransection->time }}</td> -->
-                <!-- <td>{{ strpos($onetransection->brokrage,"₹") ? $onetransection->brokrage : round($onetransection->brokrage,2)  }}</td> -->
             </tr>
             @endforeach
             @if(!empty($calculation))
-            <tr>
+            <tr style="background: yellowgreen !important">
                 <td> </td>
-                <td> Total  </td>
+                <td> Total </td>
                 <td> </td>
-                <td> {{ $calculation->stock_entry }} </td>
-                <td> {{ $calculation->stock_exit }} </td>
+                <td> {{ $calculation->quantity }} </td>
+                <td> </td>
+                <td> </td>
                 <td> {{ $calculation->net_exit }} </td>
                 <td> {{ $calculation->amount }} </td>
-                <td> {{ $calculation->opening_balance }} </td>
-                <td> {{ $calculation->closing_balance }} </td>
+                <td> </td>
+                <td> </td>
             </tr>
             @endif
         </tbody>
     </table>
     
-    <hr style="height: 5px;border-width:0;color:white;background-color:white">
 
     <table style="border: 2px solid black;width: 100%;">
         <tr style="border: none;">

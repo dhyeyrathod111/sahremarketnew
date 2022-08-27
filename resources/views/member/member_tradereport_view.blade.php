@@ -15,11 +15,11 @@
                                 <div class="form-row">
                                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
                                         <label>From Date:</label>
-                                        <input type="text" placeholder="DD/MM/YYYY" name="start_date" value="{{ request()->start_date }}" class="form-control">
+                                        <input type="text" placeholder="DD-MM-YYYY" name="start_date" value="{{ request()->start_date }}" class="form-control">
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
                                         <label>To Date:</label>
-                                        <input type="text" placeholder="DD/MM/YYYY" name="end_date" value="{{ request()->end_date }}" class="form-control">
+                                        <input type="text" placeholder="DD-MM-YYYY" name="end_date" value="{{ request()->end_date }}" class="form-control">
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 fillterbuttonallignment">
                                         <input type="hidden" value="1" name="filter">
@@ -42,11 +42,11 @@
                                     <thead>
                                         <tr>
                                             <th style="background: #fcdb68"></th>
-                                            <th style="background: #fcdb68">Client code</th>
-                                            <th style="background: #fcdb68">Proton code</th>
-                                            <th style="background: #fcdb68">Opning Qty</th>
+                                            <th style="background: #fcdb68">Client Code</th>
+                                            <th style="background: #fcdb68">Proton Code</th>
+                                            <th style="background: #fcdb68">Opning Quantity</th>
                                             <th style="background: #fcdb68">Ledger Size</th>
-                                            <th style="background: #fcdb68">Opning Bal</th>
+                                            <th style="background: #fcdb68">Opning Balance</th>
                                             <th style="background: #fcdb68">Start Date</th>
                                             <th style="background: #fcdb68">End Date</th>
                                             <th style="background: #fcdb68"></th>
@@ -69,16 +69,16 @@
                                             <th style="background: #af9b20"></th>
                                         </tr>
                                         <tr>
-                                            <th style="background: #011e58; color: white">date</th>
-                                            <th style="background: #011e58; color: white">trade id</th>
-                                            <th style="background: #011e58; color: white">position</th>
-                                            <th style="background: #011e58; color: white">quantity</th>
-                                            <th style="background: #011e58; color: white">entry</th>
-                                            <th style="background: #011e58; color: white">exit</th>
-                                            <th style="background: #011e58; color: white">net exit</th>
-                                            <th style="background: #011e58; color: white">amount</th>
-                                            <th style="background: #011e58; color: white">opening balance</th>
-                                            <th style="background: #011e58; color: white">closing balance</th>
+                                            <th style="background: #011e58; color: white">Date</th>
+                                            <th style="background: #011e58; color: white">Trade Id</th>
+                                            <th style="background: #011e58; color: white">Position</th>
+                                            <th style="background: #011e58; color: white">Quantity</th>
+                                            <th style="background: #011e58; color: white">Entry</th>
+                                            <th style="background: #011e58; color: white">Exit</th>
+                                            <th style="background: #011e58; color: white">Net Exit</th>
+                                            <th style="background: #011e58; color: white">Amount</th>
+                                            <th style="background: #011e58; color: white">Opening Balance</th>
+                                            <th style="background: #011e58; color: white">Closing Balance</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -97,24 +97,24 @@
                                         </tr>
                                         @endforeach
                                         @if(!empty($calculation))
-                                        <tr>
+                                        <tr style="background: yellowgreen !important">
                                             <td> </td>
                                             <td> Total </td>
                                             <td> </td>
+                                            <td> {{ $calculation->quantity }} </td>
                                             <td> </td>
-                                            <td> {{ $calculation->stock_entry }} </td>
-                                            <td> {{ $calculation->stock_exit }} </td>
+                                            <td> </td>
                                             <td> {{ $calculation->net_exit }} </td>
                                             <td> {{ $calculation->amount }} </td>
-                                            <td> {{ $calculation->opening_balance }} </td>
-                                            <td> {{ $calculation->closing_balance }} </td>
+                                            <td> </td>
+                                            <td> </td>
                                         </tr>
                                         @endif
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        <div class="{{ !empty($calculation) ? '' : 'card-footer' }}">
                             <div class="row">
                                 <div class="col-md-12">
                                     {{ $transactions->links() }}      
@@ -132,7 +132,7 @@
                                     <p class="m-0" style="color: #011e58">*Computer generated bill/Ledger carries no signature</p>      
                                 </div>
                                 <div class="col-md-2">
-                                    <p class="m-0" style="color: #011e58">Brown Finice Uk Limited</p>
+                                    <p class="m-0" style="color: #011e58">Brown Finance Uk Limited</p>
                                     <p class="m-0">&nbsp;</p>
                                     <p class="m-0">&nbsp;</p>
                                     <p class="m-0">&nbsp;</p>

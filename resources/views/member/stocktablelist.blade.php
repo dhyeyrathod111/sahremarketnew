@@ -69,6 +69,7 @@
                                         <th>date</th>
                                         <th>trade id</th>
                                         <th>position</th>
+                                        <th>quantity</th>
                                         <th>entry</th>
                                         <th>exit</th>
                                         <th>net exit</th>
@@ -88,6 +89,7 @@
                                         <td>{{ date('d-m-Y', strtotime($onetransection->date)) }}</td>
                                         <td>{{ $onetransection->trade_id }}</td>
                                         <td>{{ $onetransection->position }}</td>
+                                        <td>{{ $onetransection->quantity }}</td>
                                         <td>{{ round($onetransection->stock_entry,2) }}</td>
                                         <td>{{ round($onetransection->stock_exit,2) }}</td>
                                         <td>{{ round($onetransection->net_exit,2) }}</td>

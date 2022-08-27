@@ -16,7 +16,7 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     
-    'application_name' => 'Brown Finance',
+    'application_name' => 'Brown Finance Uk Limited',
 
     /*
     |--------------------------------------------------------------------------
