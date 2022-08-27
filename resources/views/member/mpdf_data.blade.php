@@ -2,6 +2,9 @@
 <html>
 <head>
 	<title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
 	<style>
     table,
     th,
@@ -16,21 +19,7 @@
     </style>
 </head>
 <body>
-	<table style="border-collapse: collapse; width: 100%; height: 130px; background: #333f4f;border: 1px solid #333f4f">
-        <tbody style="border: 1px solid #333f4f">
-            <tr style="height: 130px;border: 1px solid #333f4f">
-                <td style="width: 21.733%; height: 130px; border: 1px solid #333f4f">
-                    <img class="rounded mx-auto d-block" src="{{ asset('public/assets/images/logonewimage.png') }}">
-                </td>
-                <td style="width: 78.267%; height: 130px; border: 1px solid #333f4f">
-                    <h3 style="text-align: center;color: #997a5b !important;">Brown Finance Uk Limited</h3>
-                    <h6 style="text-align: center;color: #997a5b !important;">Reg. Office : 27 Old Gloucester Street, WC1N 3AX, London, United Kingdom. Company No.11691414</h6>
-                    <h6 style="text-align: center;color: #997a5b !important;">Email :Brown@brownfinanceuk.com, arpbrown@hotmail.co.uk.</h6>
-                    <h6 style="text-align: center;color: #997a5b !important;">Call : +44 2038686156, +44 7482876000</h6>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+	<img class="img-fluid w-100" src="{{ asset('public/assets/images/banner_pdf_file.png') }}">
 
     <table style="border: none;width: 100%">
         <tr style="border: none;text-align: center; background: #ffd966">
@@ -50,7 +39,7 @@
         </tr>
     </table>
     
-	<table style="autosize:2.4;">
+	<table class="table">
         <thead>
             <tr>
                 <th>date</th>
@@ -62,8 +51,8 @@
                 <th>amount</th>
                 <th>opening balance</th>
                 <th>closing balance</th>
-                <th>time</th>
-                <th>brokrage</th>
+                <!-- <th>time</th> -->
+                <!-- <th>brokrage</th> -->
             </tr>
         </thead>
         <tbody>
@@ -78,8 +67,8 @@
                 <td>{{ $onetransection->amount }}</td>
                 <td>{{ $onetransection->opening_balance }}</td>
                 <td>{{ $onetransection->closing_balance }}</td>
-                <td>{{ $onetransection->time }}</td>
-                <td>{{ strpos($onetransection->brokrage,"₹") ? $onetransection->brokrage : round($onetransection->brokrage,2)  }}</td>
+                <!-- <td>{{ $onetransection->time }}</td> -->
+                <!-- <td>{{ strpos($onetransection->brokrage,"₹") ? $onetransection->brokrage : round($onetransection->brokrage,2)  }}</td> -->
             </tr>
             @endforeach
             @if(!empty($calculation))
@@ -93,8 +82,6 @@
                 <td> {{ $calculation->amount }} </td>
                 <td> {{ $calculation->opening_balance }} </td>
                 <td> {{ $calculation->closing_balance }} </td>
-                <td> </td>
-                <td> </td>
             </tr>
             @endif
         </tbody>

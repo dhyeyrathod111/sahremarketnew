@@ -74,6 +74,7 @@ class DashboardController extends Controller
         } else {
             $member = \App\Member::find($request->session()->get('member_id'));
         }
+
         if (!empty($request->filter) && $request->filter == 1) {
             $start_date = \Carbon\Carbon::parse($request->start_date)->toDateTimeString();
             $end_date = \Carbon\Carbon::parse($request->end_date)->toDateTimeString();
@@ -84,11 +85,15 @@ class DashboardController extends Controller
         } else {
             $stockAssignment = \App\StockAssignment::where('member_code',$member->member_code)->get();
         }
+
         $html = view('member.mpdf_data',[
             'member' => $member,
             'transection'=>$stockAssignment,
             'calculation' => !empty($calculation) ? $calculation : NULL 
         ])->render();
+
+        // echo $html;
+
         $mpdf->WriteHTML($html);$mpdf->Output($member->member_code.".pdf",'D');
     }
     public function calculated_stack($stockdata)
@@ -131,12 +136,13 @@ class DashboardController extends Controller
             if (!empty($stockAssignment)) {
                 $this->data['calculation'] = $this->calculated_stack($stockAssignment);
             }
+            $this->data['filter_dates'] = ['start_date' => $start_date, 'end_date' => $end_date];
         } else {
             $stockAssignment = \App\StockAssignment::where('member_code',$member->member_code)->paginate(
                 $perPage = config('app.pagination_limit'), $columns = ['*'], $pageName = 'pagination'
             );
         }
-        $this->data['transactions'] = $stockAssignment;
+        $this->data['transactions'] = $stockAssignment;$this->data['member'] = $member;
         return view('member.member_tradereport_view',$this->data);
     }
 }

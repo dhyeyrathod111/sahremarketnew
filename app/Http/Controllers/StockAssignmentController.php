@@ -89,7 +89,10 @@ class StockAssignmentController extends Controller
     {
         $spreadsheet_array = $activeSheet->toArray();
         unset($spreadsheet_array[0]);unset($spreadsheet_array[1]);unset($spreadsheet_array[2]);unset($spreadsheet_array[3]);
+        // update member initial state
         $member = \App\Member::where('member_code',$member_code)->first();
+        $member->opening_quantity = $activeSheet->getCell('C2')->getFormattedValue();$member->ledger_size = $activeSheet->getCell('D2')->getFormattedValue();
+        $member->opning_balance = $activeSheet->getCell('E2')->getFormattedValue();$member->save();
         if (!empty($member)) {
             $member_id = $member->id;
         } else {
@@ -108,15 +111,16 @@ class StockAssignmentController extends Controller
                 }
                 $newtransection->date = $finalDateString;
                 $newtransection->trade_id = $activeSheet->getCell('B'.$excelKeyStart)->getFormattedValue();
-                $newtransection->position = $activeSheet->getCell('c'.$excelKeyStart)->getFormattedValue();
-                $newtransection->stock_entry = $activeSheet->getCell('D'.$excelKeyStart)->getFormattedValue();
-                $newtransection->stock_exit = $activeSheet->getCell('E'.$excelKeyStart)->getFormattedValue();
-                $newtransection->net_exit = $activeSheet->getCell('F'.$excelKeyStart)->getFormattedValue();
-                $newtransection->amount = $activeSheet->getCell('G'.$excelKeyStart)->getFormattedValue();
-                $newtransection->opening_balance = $activeSheet->getCell('H'.$excelKeyStart)->getFormattedValue();
-                $newtransection->closing_balance = $activeSheet->getCell('I'.$excelKeyStart)->getFormattedValue();
-                $newtransection->time = $activeSheet->getCell('J'.$excelKeyStart)->getFormattedValue();
-                $newtransection->brokrage = $activeSheet->getCell('K'.$excelKeyStart)->getFormattedValue();
+                $newtransection->position = $activeSheet->getCell('C'.$excelKeyStart)->getFormattedValue();
+                $newtransection->quantity = $activeSheet->getCell('D'.$excelKeyStart)->getFormattedValue();
+                $newtransection->stock_entry = $activeSheet->getCell('E'.$excelKeyStart)->getFormattedValue();
+                $newtransection->stock_exit = $activeSheet->getCell('F'.$excelKeyStart)->getFormattedValue();
+                $newtransection->net_exit = $activeSheet->getCell('G'.$excelKeyStart)->getFormattedValue();
+                $newtransection->amount = $activeSheet->getCell('H'.$excelKeyStart)->getFormattedValue();
+                $newtransection->opening_balance = $activeSheet->getCell('I'.$excelKeyStart)->getFormattedValue();
+                $newtransection->closing_balance = $activeSheet->getCell('J'.$excelKeyStart)->getFormattedValue();
+                $newtransection->time = $activeSheet->getCell('K'.$excelKeyStart)->getFormattedValue();
+                $newtransection->brokrage = $activeSheet->getCell('L'.$excelKeyStart)->getFormattedValue();
                 $newtransection->member_code = $member_code;
                 $trade_id = $activeSheet->getCell('B'.$excelKeyStart)->getFormattedValue();
                 try {

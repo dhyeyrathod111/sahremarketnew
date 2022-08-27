@@ -160,7 +160,7 @@ body {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
-    color: #71748d;
+    color: #011e58;
     background-color: #efeff6;
     -webkit-font-smoothing: antialiased;
 }
@@ -7271,4 +7271,23 @@ Media Query
 
 .applybackground h3 {
     color: #997a5b !important; 
+}
+
+
+
+.fillterbuttonallignment {
+    margin-top: 27px
+}
+
+
+hr.style-eight {
+height: 10px;
+border: 1;
+margin-top: 0;margin-bottom: 0;
+box-shadow: inset 0 34px 9px -3px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px;
 }
