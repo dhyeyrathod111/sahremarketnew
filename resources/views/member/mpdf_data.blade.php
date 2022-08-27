@@ -30,12 +30,11 @@
             <td style="border: none;padding: 5px">Opening Bal</td>
         </tr>
         <tr style="border: none;text-align: center;background: #ae9a24">
-            <td style="border: none;padding: 5px">{{ $member->member_code }}</td>
-            <td style="border: none;padding: 5px">{{ $member->password }}</td>
-            <td style="border: none;padding: 5px"></td>
-            <td style="border: none;padding: 5px"></td>
-            <td style="border: none;padding: 5px"></td>
-
+            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->member_code }}</td>
+            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->password }}</td>
+            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->opening_quantity }}</td>
+            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->ledger_size }}</td>
+            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->opning_balance }}</td>
         </tr>
     </table>
     
@@ -91,19 +90,19 @@
 
     <table style="border: 2px solid black;width: 100%;">
         <tr style="border: none;">
-            <td style="border: none;padding: 5px">*Merely Individual Entity Being Acknowleged as Valid Ledger Client</td>
+            <td style="border: none;padding: 0px;font-size: small">*Merely Individual Entity Being Acknowleged as Valid Ledger Client</td>
         </tr>
         <tr style="border: none;">
-            <td style="border: none;padding: 5px">*Long term Debits shall be levy Anually Intrest @18%</td>
+            <td style="border: none;padding: 0px;font-size: small">*Long term Debits shall be levy Anually Intrest @18%</td>
         </tr>
         <tr style="border: none;">
-            <td style="border: none;padding: 5px">*Proton Code is Higly Classified, Company shall not responsible for misuses from client side</td>
+            <td style="border: none;padding: 0px;font-size: small">*Proton Code is Higly Classified, Company shall not responsible for misuses from client side</td>
         </tr>
         <tr style="border: none;">
-            <td style="border: none;padding: 5px">*Any Error in Ledger should be notify within Seven Uk Working Days</td>
+            <td style="border: none;padding: 0px;font-size: small">*Any Error in Ledger should be notify within Seven Uk Working Days</td>
         </tr>
         <tr style="border: none;">
-            <td style="border: none;padding: 5px">*Computer generated bill/Ledger carries no signature</td>
+            <td style="border: none;padding: 0px;font-size: small">*Computer generated bill/Ledger carries no signature</td>
         </tr>
     </table>
 
