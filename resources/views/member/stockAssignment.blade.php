@@ -43,6 +43,10 @@
                         <form id="stock_assignment_form" action="{{ route('process_stock_assignment') }}"  method="POST" enctype="multipart/form-data" >
                             @csrf
                             <div class="form-group">
+                                <label class="col-form-label">Example File:</label>
+                                <a href="{{ asset('public/assets/libs/sample/sample_file.xls') }}">Exampleple_file.xls</a>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-form-label">File To Upload:</label>
                                 <input type="file" name="master_data" class="form-control" required>
                             </div>
