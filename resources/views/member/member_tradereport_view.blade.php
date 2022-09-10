@@ -104,8 +104,9 @@
                                             <td> {{ $calculation->quantity }} </td>
                                             <td> </td>
                                             <td> </td>
-                                            <td> {{ $calculation->net_exit }} </td>
-                                            <td> {{ $calculation->amount }} </td>
+                                            <td> {{ round($calculation->net_exit,2) }} </td>
+                                            <td> {{ round($calculation->net_exit, 2) }} </td>
+                                            <td> {{ round($calculation->amount,2) }} </td>
                                             <td> </td>
                                             <td> </td>
                                         </tr>
