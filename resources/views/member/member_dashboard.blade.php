@@ -22,7 +22,11 @@
                                 <div class="row">
                                     <div class="col-xl-2 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="text-center">
-                                            <img src="http://localhost/dhyey_rathod/sharemarketnew/public/assets/images/avatar-1.jpg" alt="User Avatar" class="rounded-circle user-avatar-xxl">
+                                            @if($member->image != "NA")
+                                                <img src="{{ url(\Storage::url("app/".$member->image)) }}" alt="User Avatar" class="rounded-circle user-avatar-xxl">
+                                            @else
+                                                <img src="{{ url(\Storage::url("app/member_images/default.jpg")) }}" alt="User Avatar" class="rounded-circle user-avatar-xxl">
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 col-12">

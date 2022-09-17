@@ -40,7 +40,7 @@
                     <h5 class="card-header">Members form</h5>
                     <div class="card-body">
                         <div id="alert_message"></div>
-                        <form id="add_new_member" action="{{ route('process_newmember') }}" method="POST">
+                        <form id="add_new_member" action="{{ route('process_newmember') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label class="col-form-label">First name:</label>
@@ -54,6 +54,12 @@
                                 <label class="col-form-label">Email:</label>
                                 <input type="email" value="{{ !empty($post_mamber->email) ? $post_mamber->email : '' }}" name="email" class="form-control">
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label">Image:</label>
+                                <input class="form-control" name="member_image" type="file">
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-form-label">Member Code:</label>
                                 <input type="text" {{ !empty($post_mamber) ? 'readonly' : '' }} value="{{ !empty($post_mamber->member_code) ? $post_mamber->member_code : '' }}" name="member_code" class="form-control">
@@ -102,12 +108,14 @@
                 },
             },
             submitHandler: function(form) {
-                var form_data = JSON.stringify($(form).serializeArray());
+                var form = $('#add_new_member')[0];
+                var form_data = new FormData(form);
                 $('#preloader').fadeIn();
                 $.ajax({
                     type: "POST",
                     url: $(form).attr('action'),
-                    data: JSON.parse(form_data),
+                    enctype: 'multipart/form-data',processData: false,contentType: false,cache: false,
+                    data: form_data,
                     success: response => {
                         $('#preloader').fadeOut();
                         if (response.status == true) {

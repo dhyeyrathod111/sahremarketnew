@@ -57,6 +57,10 @@ class MemberController extends Controller
                     return response($this->response, 200)->header('Content-Type', 'application/json');exit();
                 }
             }
+            $member_image = $request->file('member_image');
+            if (!empty($member_image) && $member_image != NULL) {
+                $newmember->image = $member_image->store("/member_images");
+            }
             $newmember->firstname = $request->firstname;
             $newmember->lastname = $request->lastname;
             $newmember->email = $request->email;

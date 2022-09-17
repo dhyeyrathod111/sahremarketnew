@@ -51,6 +51,7 @@
                                         <th>Email</th>
                                         <th>Contact</th>
                                         <th>Member Code</th>
+                                        <th>Image</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -62,8 +63,17 @@
                                         <td>{{ $onemember->email }}</td>
                                         <td>{{ $onemember->contact }}</td>
                                         <td>{{ $onemember->member_code }}</td>
+                                        <td style="width: 100px">
+                                            @if(!empty($onemember->image) && $onemember->image != 'NA')
+                                                <img src="{{ url(\Storage::url("app/".$onemember->image)) }}" alt="User Avatar" class="user-avatar-xxl">
+                                            @else
+                                                <img src="{{ url(\Storage::url("app/member_images/default.jpg")) }}" alt="User Avatar" class="user-avatar-xxl">
+                                            @endif
+                                        </td>
                                         <td>
-                                            <a class="btn btn-primary btn-sm" href="{{ route('addnewmember',['member_id'=>$onemember->id]) }}"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-primary btn-sm" href="{{ route('addnewmember',['member_id'=>$onemember->id]) }}">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach

@@ -22,15 +22,24 @@
                     <div class="card-header">
                         <form method="GET" action="{{ route('stock_list_route') }}" id="filter_form">
                             <div class="form-row">
-                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 mb-2">
                                     <label>From Date:</label>
                                     <input type="text" placeholder="DD-MM-YYYY" name="start_date" value="{{ request()->start_date }}" class="form-control">
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 mb-2">
                                     <label>To Date:</label>
                                     <input type="text" placeholder="DD-MM-YYYY" name="end_date" value="{{ request()->end_date }}" class="form-control">
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 fillterbuttonallignment">
+                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 mb-2">
+                                    <label>Members:</label>
+                                    <select name="member_select" class="form-control">
+                                        <option value="">--- Select Member ---</option>
+                                        @foreach($members as $memeber)
+                                            <option {{ request()->member_select == $memeber->member_code ? 'selected' : '' }} value="{{ $memeber->member_code }}" >{{ $memeber->member_code }} ({{ $memeber->firstname." ".$memeber->lastname }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 fillterbuttonallignment">
                                     <input type="hidden" value="1" name="filter">
                                     <button class="btn btn-primary btn-sm" type="submit">Submit</button>
                                     <a class="btn btn-primary btn-sm" href="{{ route('stock_list_route') }}">Reset</a>
@@ -44,20 +53,20 @@
                                 <thead>
                                     <tr>
                                         <!-- <th>id</th> -->
-                                        <th>date</th>
-                                        <th>trade id</th>
-                                        <th>position</th>
-                                        <th>quantity</th>
-                                        <th>entry</th>
-                                        <th>exit</th>
-                                        <th>net exit</th>
-                                        <th>amount</th>
-                                        <th>opening balance</th>
-                                        <th>closing balance</th>
-                                        <th>time</th>
-                                        <th>brokrage</th>
-                                        <th>Member Code</th>
-                                        <th>Action</th>
+                                        <th style="background: #011e58; color: white">date</th>
+                                        <th style="background: #011e58; color: white">trade id</th>
+                                        <th style="background: #011e58; color: white">position</th>
+                                        <th style="background: #011e58; color: white">quantity</th>
+                                        <th style="background: #011e58; color: white">entry</th>
+                                        <th style="background: #011e58; color: white">exit</th>
+                                        <th style="background: #011e58; color: white">net exit</th>
+                                        <th style="background: #011e58; color: white">amount</th>
+                                        <th style="background: #011e58; color: white">opening balance</th>
+                                        <th style="background: #011e58; color: white">closing balance</th>
+                                        <th style="background: #011e58; color: white">time</th>
+                                        <th style="background: #011e58; color: white">brokrage</th>
+                                        <th style="background: #011e58; color: white">Member Code</th>
+                                        <th style="background: #011e58; color: white">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,6 +89,24 @@
                                         <td><a class="btn btn-primary btn-sm" href="{{ route('update_single_stock',['stock_id' => Crypt::encryptString($onetransection->id) ]) }}"><i class="fas fa-edit"></i></a></td>
                                     </tr>
                                     @endforeach
+                                    @if(!empty($calculation))
+                                        <tr style="background: yellowgreen !important">
+                                            <td> </td>
+                                            <td> Total </td>
+                                            <td> </td>
+                                            <td> {{ $calculation->quantity }} </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> {{ round($calculation->net_exit,2) }} </td>
+                                            <td> {{ round($calculation->amount, 2) }} </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> {{ round($calculation->brokrage, 2) }} </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -87,7 +114,9 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12">
-                                {{ $transactions->links() }}  
+                                @if(empty(request()->filter))
+                                    {{ $transactions->links() }}
+                                @endif
                             </div>
                         </div>
                     </div>

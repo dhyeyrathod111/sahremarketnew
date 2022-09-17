@@ -96,9 +96,11 @@ class DashboardController extends Controller
 
         $mpdf->WriteHTML($html);$mpdf->Output($member->member_code.".pdf",'D');
     }
-    public function calculated_stack($stockdata)
+    public function calculated_stack($stockdata,$is_admin = 0)
     {
+
         $stock_entry = 0;$stock_exit = 0;$net_exit = 0;$amount = 0;$opening_balance = 0;$closing_balance = 0;$quantity = 0;
+        $brokrage = 0;
         foreach ($stockdata as $key => $onestack) :
             // $stock_entry = $stock_entry + $onestack->stock_entry;
             // $stock_exit = $stock_exit + $onestack->stock_exit;
@@ -107,16 +109,22 @@ class DashboardController extends Controller
             // $opening_balance = $opening_balance + $this->clean_number($onestack->opening_balance);
             // $closing_balance = $closing_balance + $this->clean_number($onestack->closing_balance);
             $quantity = $quantity + $onestack->quantity;
+            $brokrage = $brokrage + $this->clean_number($onestack->brokrage);
         endforeach;
-        return json_decode(json_encode([
+
+        $response_array = [
             // 'stock_entry' => $stock_entry,
             // 'stock_exit' => $stock_exit,
             'net_exit' => $net_exit,
             'amount' => $amount,
             // 'opening_balance' => $opening_balance,
             // 'closing_balance' => $closing_balance,
-            'quantity' => $quantity,
-        ]));
+            'quantity' => $quantity
+        ];
+        if ($is_admin == 1) {
+            $response_array['brokrage'] = $brokrage;
+        }
+        return json_decode(json_encode($response_array));
     }
     public function clean_number($number_string)
     {

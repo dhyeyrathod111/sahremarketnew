@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
-// use Illuminate\Support\Facades\Log;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
@@ -21,8 +20,9 @@ class StockAssignmentController extends Controller
 
     public function __construct()
     {
-        $this->data = [];$this->response = [];
+        $this->data = [];$this->response = [];$this->pagination_limit = 50;
         $this->membreledger = new \App\Http\Controllers\MemberledgerController;
+        $this->dashboard = new \App\Http\Controllers\DashboardController;
     }
     /**
      * Display a listing of the resource.
@@ -89,7 +89,6 @@ class StockAssignmentController extends Controller
     {
         $spreadsheet_array = $activeSheet->toArray();
         unset($spreadsheet_array[0]);unset($spreadsheet_array[1]);unset($spreadsheet_array[2]);unset($spreadsheet_array[3]);
-        // update member initial state
         $member = \App\Member::where('member_code',$member_code)->first();
         $member->opening_quantity = $activeSheet->getCell('C2')->getFormattedValue();$member->ledger_size = $activeSheet->getCell('D2')->getFormattedValue();
         $member->opning_balance = $activeSheet->getCell('E2')->getFormattedValue();$member->save();
@@ -142,17 +141,24 @@ class StockAssignmentController extends Controller
     public function stack_list(Request $request)
     {
         if (!empty($request->filter) && $request->filter == 1) {
-            $start_date = Carbon::parse($request->start_date)->toDateTimeString();
-            $end_date = Carbon::parse($request->end_date)->toDateTimeString();
-            $stockAssignment = \App\StockAssignment::whereBetween('date',[$start_date,$end_date])->paginate(
-                $perPage = 10000, $columns = ['*'], $pageName = 'pagination'
-            );
+            $stockAssignment = \App\StockAssignment::where('is_active',1);
+            if (!empty($request->member_select) && $request->member_select != '') {
+                $stockAssignment->where('member_code',$request->member_select);
+            } 
+            if (!empty($request->start_date) && !empty($request->end_date)) {
+                $start_date = Carbon::parse($request->start_date)->toDateTimeString();
+                $end_date = Carbon::parse($request->end_date)->toDateTimeString();
+                $stockAssignment->whereBetween('date',[$start_date,$end_date]);
+            }
+            $stockAssignment = $stockAssignment->get();
+            $this->data['calculation'] = $this->dashboard->calculated_stack($stockAssignment,1);
         } else {
             $stockAssignment = \App\StockAssignment::paginate(
-                $perPage = config('app.pagination_limit'), $columns = ['*'], $pageName = 'pagination'
+                $perPage = $this->pagination_limit, $columns = ['*'], $pageName = 'pagination'
             );
         }
         $this->data['transactions'] = $stockAssignment;
+        $this->data['members'] = \App\Member::where('is_admin',0)->get();
         return view('member.stocktablelist',$this->data);
     }
     public function update_single_stock(Request $request)
