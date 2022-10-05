@@ -70,6 +70,7 @@ Route::middleware(['checkmemberauth'])->group(function () {
 	Route::get('/member/stock_list','StockAssignmentController@stack_list')->name('stock_list_route');
 	Route::get('/member/update_single_stock','StockAssignmentController@update_single_stock')->name('update_single_stock');
 	Route::post('/member/update_single_stock_process','StockAssignmentController@update_single_stock_process')->name('update_single_stock_process');
+	Route::get('/member/download_excel_admin','StockAssignmentController@download_excel_admin')->name('download_excel_admin');
 
 
 	Route::get('/member/show_ledger_member','MemberledgerController@show_ledger_member')->name('show_ledger_member');

@@ -28,7 +28,8 @@
                                         <a href="{{ route('download_excel',[
                                             'start_date' => request()->start_date,
                                             'end_date' => request()->end_date,
-                                            'filter' => request()->filter
+                                            'filter' => request()->filter,
+                                            'is_download' => 1
                                         ]) }}" class="btn btn-primary btn-sm float-right">Download PDF</a>
                                         
                                     </div>

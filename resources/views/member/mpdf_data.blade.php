@@ -22,20 +22,22 @@
 	<img class="img-fluid w-100" src="{{ asset('public/assets/images/banner_pdf_file.png') }}">
 
     <table style="border: none;width: 100%">
-        <tr style="border: none;text-align: center; background: #ffd966">
-            <td style="border: none;padding: 5px">Client Code</td>
-            <td style="border: none;padding: 5px">Proton Code</td>
-            <td style="border: none;padding: 5px">Opening Quantity</td>
-            <td style="border: none;padding: 5px">Ledger Size</td>
-            <td style="border: none;padding: 5px">Opening Balance</td>
-        </tr>
-        <tr style="border: none;text-align: center;background: #ae9a24">
-            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->member_code }}</td>
-            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->password }}</td>
-            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->opening_quantity }}</td>
-            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->ledger_size }}</td>
-            <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->opning_balance }}</td>
-        </tr>
+        @if(!empty($member))
+            <tr style="border: none;text-align: center; background: #ffd966">
+                <td style="border: none;padding: 5px">Client Code</td>
+                <td style="border: none;padding: 5px">Proton Code</td>
+                <td style="border: none;padding: 5px">Opening Quantity</td>
+                <td style="border: none;padding: 5px">Ledger Size</td>
+                <td style="border: none;padding: 5px">Opening Balance</td>
+            </tr>
+            <tr style="border: none;text-align: center;background: #ae9a24">
+                <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->member_code }}</td>
+                <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->password }}</td>
+                <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->opening_quantity }}</td>
+                <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->ledger_size }}</td>
+                <td style="border: none;padding: 5px;background: #af9b20;color: white">{{ $member->opning_balance }}</td>
+            </tr>
+        @endif
     </table>
     
 	<table class="table m-0">

@@ -143,7 +143,7 @@ class StockAssignmentController extends Controller
         if (!empty($request->filter) && $request->filter == 1) {
             $stockAssignment = \App\StockAssignment::where('is_active',1);
             if (!empty($request->member_select) && $request->member_select != '') {
-                $stockAssignment->where('member_code',$request->member_select);
+                $stockAssignment->whereIn('member_code',$request->member_select);
             } 
             if (!empty($request->start_date) && !empty($request->end_date)) {
                 $start_date = Carbon::parse($request->start_date)->toDateTimeString();
@@ -160,6 +160,26 @@ class StockAssignmentController extends Controller
         $this->data['transactions'] = $stockAssignment;
         $this->data['members'] = \App\Member::where('is_admin',0)->get();
         return view('member.stocktablelist',$this->data);
+    }
+    public function download_excel_admin(Request $request)
+    {
+        $mpdf = new \Mpdf\Mpdf();
+        $stockAssignment = \App\StockAssignment::where('is_active',1);
+        if (!empty($request->member_select) && $request->member_select != '') {
+            $stockAssignment->whereIn('member_code',$request->member_select);
+        } 
+        if (!empty($request->start_date) && !empty($request->end_date)) {
+            $start_date = Carbon::parse($request->start_date)->toDateTimeString();
+            $end_date = Carbon::parse($request->end_date)->toDateTimeString();
+            $stockAssignment->whereBetween('date',[$start_date,$end_date]);
+        }
+        $stockAssignment = $stockAssignment->get();
+        $html = view('member.mpdf_data',[
+            'transection'=> $stockAssignment,
+            'calculation' => $this->dashboard->calculated_stack($stockAssignment,1) 
+        ])->render();
+        $fileName = "master_export_".date('d-m-Y', time());
+        $mpdf->WriteHTML($html);$mpdf->Output($fileName.".pdf",'D');
     }
     public function update_single_stock(Request $request)
     {

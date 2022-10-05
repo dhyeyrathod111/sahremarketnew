@@ -74,7 +74,7 @@
                                     <p class="m-0" style="color: #011e58">*Computer generated bill/Ledger carries no signature</p>      
                                 </div>
                                 <div class="col-md-2">
-                                    <p class="m-0" style="color: #011e58">Brown Finice Uk Limited</p>
+                                    <p class="m-0" style="color: #011e58">Brown Finance Uk Limited</p>
                                     <p class="m-0">&nbsp;</p>
                                     <p class="m-0">&nbsp;</p>
                                     <p class="m-0">&nbsp;</p>

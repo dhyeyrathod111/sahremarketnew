@@ -32,10 +32,14 @@
                                 </div>
                                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 mb-2">
                                     <label>Members:</label>
-                                    <select name="member_select" class="form-control">
+                                    <select name="member_select[]" class="form-control" multiple="multiple">
                                         <option value="">--- Select Member ---</option>
                                         @foreach($members as $memeber)
-                                            <option {{ request()->member_select == $memeber->member_code ? 'selected' : '' }} value="{{ $memeber->member_code }}" >{{ $memeber->member_code }} ({{ $memeber->firstname." ".$memeber->lastname }})</option>
+                                            @if(!empty(request()->member_select))
+                                                <option {{ in_array($memeber->member_code, request()->member_select) ? 'selected' : '' }} value="{{ $memeber->member_code }}" >{{ $memeber->member_code }} ({{ $memeber->firstname." ".$memeber->lastname }})</option>
+                                            @else 
+                                                <option value="{{ $memeber->member_code }}" >{{ $memeber->member_code }} ({{ $memeber->firstname." ".$memeber->lastname }})</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -43,6 +47,12 @@
                                     <input type="hidden" value="1" name="filter">
                                     <button class="btn btn-primary btn-sm" type="submit">Submit</button>
                                     <a class="btn btn-primary btn-sm" href="{{ route('stock_list_route') }}">Reset</a>
+                                    <a href="{{ route('download_excel_admin',[
+                                            'start_date' => request()->start_date,
+                                            'end_date' => request()->end_date,
+                                            'member_select' => request()->member_select,
+                                            'filter' => request()->filter
+                                        ]) }}" class="btn btn-primary btn-sm float-right">Download PDF</a>  
                                 </div>
                             </div>
                         </form>
@@ -73,7 +83,7 @@
                                     @foreach($transactions as $onetransection)
                                     <tr>
                                         <!-- <td>{{ $onetransection->id }}</td> -->
-                                        <td>{{ date('d-m-Y', strtotime($onetransection->date)) }}</td>
+                                        <td style="width: 100%">{{ date('d-m-Y', strtotime($onetransection->date)) }}</td>
                                         <td>{{ $onetransection->trade_id }}</td>
                                         <td>{{ $onetransection->position }}</td>
                                         <td>{{ $onetransection->quantity }}</td>
