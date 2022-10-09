@@ -186,9 +186,9 @@ class StockAssignmentController extends Controller
                 'calculation' => $this->dashboard->calculated_stack($stockAssignment,1) 
             ])->render();
         }
-        echo $html;
-        // $fileName = "master_export_".date('d-m-Y', time());
-        // $mpdf->WriteHTML($html);$mpdf->Output($fileName.".pdf",'D');
+        // echo $html;
+        $fileName = "master_export_".date('d-m-Y', time());
+        $mpdf->WriteHTML($html);$mpdf->Output($fileName.".pdf",'D');
     }
     public function update_single_stock(Request $request)
     {
