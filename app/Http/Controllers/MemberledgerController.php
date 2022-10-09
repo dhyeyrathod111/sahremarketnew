@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Memberledger;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class MemberledgerController extends Controller
 {
@@ -12,6 +13,11 @@ class MemberledgerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->data = [];$this->response = [];$this->pagination_limit = 50;
+        $this->dashboard = new \App\Http\Controllers\DashboardController;
+    }
     public function index()
     {
         //
@@ -58,5 +64,28 @@ class MemberledgerController extends Controller
         $this->data['ledgerdata'] = \App\Memberledger::where(['member_id' => $member->id,'is_closing_balance' => 0])->get();
         $this->data['closing_balance'] = \App\Memberledger::where(['member_id' => $member->id,'is_closing_balance' => 1])->first();
         return view('member.member_ledger_view',$this->data);
+    }
+    public function brokerage_calculation(Request $request)
+    {
+        if (!empty($request->filter) && $request->filter == 1) {
+            $stockAssignment = \App\StockAssignment::where('is_active',1);
+            if (!empty($request->member_select) && $request->member_select != '') {
+                $stockAssignment->whereIn('member_code',$request->member_select);
+            } 
+            if (!empty($request->start_date) && !empty($request->end_date)) {
+                $start_date = Carbon::parse($request->start_date)->toDateTimeString();
+                $end_date = Carbon::parse($request->end_date)->toDateTimeString();
+                $stockAssignment->whereBetween('date',[$start_date,$end_date]);
+            }
+            $stockAssignment = $stockAssignment->get();
+            $this->data['calculation'] = $this->dashboard->calculated_stack($stockAssignment,1);
+        } else {
+            $stockAssignment = \App\StockAssignment::paginate(
+                $perPage = $this->pagination_limit, $columns = ['*'], $pageName = 'pagination'
+            );
+        }
+        $this->data['transactions'] = $stockAssignment;
+        $this->data['members'] = \App\Member::where('is_admin',0)->get();
+        return view('member.brokerage_calculation_view',$this->data);   
     }
 }

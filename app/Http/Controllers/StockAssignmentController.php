@@ -174,12 +174,21 @@ class StockAssignmentController extends Controller
             $stockAssignment->whereBetween('date',[$start_date,$end_date]);
         }
         $stockAssignment = $stockAssignment->get();
-        $html = view('member.mpdf_data',[
-            'transection'=> $stockAssignment,
-            'calculation' => $this->dashboard->calculated_stack($stockAssignment,1) 
-        ])->render();
-        $fileName = "master_export_".date('d-m-Y', time());
-        $mpdf->WriteHTML($html);$mpdf->Output($fileName.".pdf",'D');
+        if (!empty($request->is_brokerage) && $request->is_brokerage != '') {
+            $html = $html = view('member.mpdf_brokerage_data',[
+                'is_brokerage' => $request->is_brokerage,
+                'transection'=> $stockAssignment,
+                'calculation' => $this->dashboard->calculated_stack($stockAssignment,1) 
+            ])->render();
+        } else {
+            $html = view('member.mpdf_data',[
+                'transection'=> $stockAssignment,
+                'calculation' => $this->dashboard->calculated_stack($stockAssignment,1) 
+            ])->render();
+        }
+        echo $html;
+        // $fileName = "master_export_".date('d-m-Y', time());
+        // $mpdf->WriteHTML($html);$mpdf->Output($fileName.".pdf",'D');
     }
     public function update_single_stock(Request $request)
     {

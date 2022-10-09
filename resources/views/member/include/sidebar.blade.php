@@ -16,10 +16,17 @@
                             <a class="nav-link {{ (request()->is('member/dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}"><i class="fa fa-fw fa-user-circle"></i>SGX Trade Ledger <span class="badge badge-success">6</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('member/memberlist') || request()->is('member/addnewmember')) ? 'active' : '' }}" href="{{ route('memberlist') }}" ><i class="fas fa-hands-helping"></i>Members</a>
+                            <a class="nav-link {{ (request()->is('member/memberlist') || request()->is('member/addnewmember')) ? 'active' : '' }}" href="{{ route('memberlist') }}" ><i class="fas fa-user"></i>Members</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('member/stock*')) ? 'active' : '' }}" href="{{ route('stock_list_route') }}" ><i class="fas fa-hands-helping"></i>Stock Assignment</a>
+                            <a class="nav-link {{ (request()->is('member/stock_list')) ? 'active' : '' }}" href="{{ route('stock_list_route') }}" ><i class="fas fa-list-ol"></i>Stock Assignment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('member/stock_assignment')) ? 'active' : '' }}" href="{{ route('stock_assignment') }}" ><i class="fas fa-plus"></i>Add New Stock</a>
+                        </li>
+                        <li>
+                            <a class="nav-link {{ '' }}" href="{{ route('brokerage_calculation') }}" >
+                                <i class="fas fa-hands-helping"></i>Brokerage Calculation</a>
                         </li>
                     @else;
                         <li class="nav-item">

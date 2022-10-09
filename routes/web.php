@@ -74,6 +74,7 @@ Route::middleware(['checkmemberauth'])->group(function () {
 
 
 	Route::get('/member/show_ledger_member','MemberledgerController@show_ledger_member')->name('show_ledger_member');
+	Route::get('/member/brokerage_calculation','MemberledgerController@brokerage_calculation')->name('brokerage_calculation');
 
 });
 
