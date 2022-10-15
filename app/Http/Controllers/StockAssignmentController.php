@@ -57,7 +57,7 @@ class StockAssignmentController extends Controller
             $this->response['message'] = implode("<br />",$validator->messages()->all());
         } else {
             try {$success_upload = [];$error_upload = [];\App\StockAssignment::query()->truncate();\App\Memberledger::query()->truncate();
-                $the_file = $request->file('master_data');
+                $the_file = $request->file('master_data');$this->store_excel_forbackup($the_file);
                 $spreadsheet = IOFactory::load($the_file->getRealPath());
                 foreach ($spreadsheet->getSheetNames() as $key => $oneSpreadsheet) :
                     if ($oneSpreadsheet != 'Report') {
@@ -72,7 +72,6 @@ class StockAssignmentController extends Controller
                     }
                 endforeach;
                 if (count($success_upload) == $spreadsheet->getSheetCount() && count($error_upload) == 0) {
-                    $this->store_excel_forbackup($the_file);
                     $this->response['status'] = TRUE;$this->response['message'] = "Excel has been Uploded successfully.";
                     $this->response['redirect_url'] = route('stock_list_route');
                 } else {

@@ -58,6 +58,7 @@ Route::middleware(['checkmemberauth'])->group(function () {
 	Route::get('/member/addnewmember','MemberController@create')->name('addnewmember');
 	Route::post('/member/process_newmember','MemberController@process_newmember')->name('process_newmember');
 	Route::get('/member/member_stocks_foradmin','MemberController@member_stocks_foradmin')->name('member_stocks_foradmin');
+	Route::get('/member/delete_member','MemberController@delete_member')->name('delete_member');
 	
 
 	Route::get('/member/stock','StockController@index')->name('stock');

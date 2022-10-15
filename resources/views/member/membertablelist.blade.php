@@ -72,8 +72,9 @@
                                         </td>
                                         <td>
                                             <a class="btn btn-primary btn-sm" href="{{ route('addnewmember',['member_id'=>$onemember->id]) }}">
-                                                <i class="fas fa-edit"></i>
+                                                Edit
                                             </a>
+                                            <button usermemebercode="{{ $onemember->member_code }}" class="btn btn-danger btn-sm" onclick="confirmation(this)" responseurl="{{ route('delete_member',['member_id'=>$onemember->id]) }}">Delete</button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -105,6 +106,13 @@
     <script src=" {{ asset('public/assets/vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
     {{-- <script src=" {{ asset('public/assets/vendor/datatables/js/data-table.js') }}"></script> --}}
     <script type="text/javascript">
+
+        const confirmation = event => {
+            if (confirm("Are you sure do u want to delete user : "+event.getAttribute('usermemebercode')+" ?")) {
+                window.location.href = event.getAttribute('responseurl');
+            }
+        } 
+
         $(document).ready(() => DataTableObj.draw());
         var DataTableObj = $('#referrals_table').DataTable({
             "pageLength": 50,

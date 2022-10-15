@@ -94,4 +94,18 @@ class MemberController extends Controller
         $this->data['member'] = $member;
         return view('member.member_stocks_foradmin',$this->data);
     }
+    public function delete_member(Request $request)
+    {
+        if ($request->session()->get('is_admin') == 1) {
+            $member = \App\Member::find($request->member_id);
+            \App\Member::where('id',$member->id)->delete();\App\StockAssignment::where('member_id',$member->id)->delete();
+            \Log::info("=================== Event Delete users Start ===================");
+            \Log::info("Member ID : ".$member->id." | Member Code : ".$member->member_code." | Deleetd BY : ".$request->session()->get('member_id'));
+            \Log::info("=================== Event Delete users End ===================");
+            return redirect()->route('memberlist');
+        } else {
+            \Log::error("ID : " .$request->session()->get('member_id')." Trying to delete users.");
+            return redirect()->route('login');
+        }
+    }
 }
