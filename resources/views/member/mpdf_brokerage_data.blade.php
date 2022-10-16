@@ -55,7 +55,7 @@
                 <td>{{ date('d-m-Y', strtotime($onetransection->date)) }}</td>
                 <td>{{ $onetransection->trade_id }}</td>
                 <td>{{ $onetransection->member_code }}</td>
-                <td>{{ $onetransection->brokrage }}</td>
+                <td>{{ round($onetransection->brokrage,2) }}</td>
             </tr>
             @endforeach
             @if(!empty($calculation))

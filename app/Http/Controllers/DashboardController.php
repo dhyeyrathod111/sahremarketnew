@@ -104,11 +104,11 @@ class DashboardController extends Controller
         foreach ($stockdata as $key => $onestack) :
             // $stock_entry = $stock_entry + $onestack->stock_entry;
             // $stock_exit = $stock_exit + $onestack->stock_exit;
-            $net_exit = $net_exit + $onestack->net_exit;
+            $net_exit = $net_exit + $this->clean_number($onestack->net_exit);
             $amount = $amount + $this->clean_number($onestack->amount);
             // $opening_balance = $opening_balance + $this->clean_number($onestack->opening_balance);
             // $closing_balance = $closing_balance + $this->clean_number($onestack->closing_balance);
-            $quantity = $quantity + $onestack->quantity;
+            $quantity = $quantity + $this->clean_number($onestack->quantity);
             $brokrage = $brokrage + $this->clean_number($onestack->brokrage);
         endforeach;
 
@@ -128,6 +128,7 @@ class DashboardController extends Controller
     }
     public function clean_number($number_string)
     {
+        $number_string = (empty($number_string) || $number_string == '') ? 0 : $number_string;
         $number_string = str_replace('₹', '', $number_string);
         $number_string = str_replace(',', '', $number_string);
         $number_string = trim($number_string);

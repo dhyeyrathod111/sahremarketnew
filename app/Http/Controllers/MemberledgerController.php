@@ -26,36 +26,38 @@ class MemberledgerController extends Controller
     {   
         $getHighestRow = $activeSheet->getHighestRow();
         $member = \App\Member::where('member_code',$oneSpreadsheet)->first();
-        for ($i=1; $i < $getHighestRow; $i++) : 
-            $ledgerdate = trim($activeSheet->getCell('N'.$i)->getFormattedValue());
-            if (!empty($ledgerdate) && str_contains($ledgerdate,'/')) :
-                $ledgerdate = explode("/", trim( $activeSheet->getCell('N'.$i)->getFormattedValue() ));
-                if (!empty($ledgerdate[2])) {
-                    $finalDateString = $ledgerdate[2]."-".$ledgerdate[0]."-".$ledgerdate[1];$finalDateString = date('Y-m-d', strtotime($finalDateString));
-                } else {
-                    $finalDateString = NULL;
+        if (!empty($member)) :
+            for ($i=1; $i < $getHighestRow; $i++) : 
+                $ledgerdate = trim($activeSheet->getCell('N'.$i)->getFormattedValue());
+                if (!empty($ledgerdate) && str_contains($ledgerdate,'/')) :
+                    $ledgerdate = explode("/", trim( $activeSheet->getCell('N'.$i)->getFormattedValue() ));
+                    if (!empty($ledgerdate[2])) {
+                        $finalDateString = $ledgerdate[2]."-".$ledgerdate[0]."-".$ledgerdate[1];$finalDateString = date('Y-m-d', strtotime($finalDateString));
+                    } else {
+                        $finalDateString = NULL;
+                    }
+                    $memberledger = new Memberledger;
+                    $memberledger->member_id = $member->id;
+                    $memberledger->date = $finalDateString;
+                    $memberledger->name = $activeSheet->getCell('O'.$i)->getFormattedValue();
+                    $memberledger->ledger_cr = $activeSheet->getCell('P'.$i)->getFormattedValue();
+                    $memberledger->ledger_dr = $activeSheet->getCell('Q'.$i)->getFormattedValue();
+                    $memberledger->net_balance = $activeSheet->getCell('R'.$i)->getFormattedValue();
+                    $memberledger->is_closing_balance = 0;
+                    $memberledger->save();
+                endif;
+                $closing_balance_row = trim($activeSheet->getCell('O'.$i)->getFormattedValue());
+                if (str_contains($closing_balance_row,'Closing Balance') || str_contains($closing_balance_row,'closing balance')) {
+                    $memberledger = new Memberledger;
+                    $memberledger->member_id = $member->id;
+                    $memberledger->ledger_cr = $activeSheet->getCell('P'.$i)->getFormattedValue();
+                    $memberledger->ledger_dr = $activeSheet->getCell('Q'.$i)->getFormattedValue();
+                    $memberledger->net_balance = $activeSheet->getCell('R'.$i)->getFormattedValue();
+                    $memberledger->is_closing_balance = 1;
+                    $memberledger->save();
                 }
-                $memberledger = new Memberledger;
-                $memberledger->member_id = $member->id;
-                $memberledger->date = $finalDateString;
-                $memberledger->name = $activeSheet->getCell('O'.$i)->getFormattedValue();
-                $memberledger->ledger_cr = $activeSheet->getCell('P'.$i)->getFormattedValue();
-                $memberledger->ledger_dr = $activeSheet->getCell('Q'.$i)->getFormattedValue();
-                $memberledger->net_balance = $activeSheet->getCell('R'.$i)->getFormattedValue();
-                $memberledger->is_closing_balance = 0;
-                $memberledger->save();
-            endif;
-            $closing_balance_row = trim($activeSheet->getCell('O'.$i)->getFormattedValue());
-            if (str_contains($closing_balance_row,'Closing Balance') || str_contains($closing_balance_row,'closing balance')) {
-                $memberledger = new Memberledger;
-                $memberledger->member_id = $member->id;
-                $memberledger->ledger_cr = $activeSheet->getCell('P'.$i)->getFormattedValue();
-                $memberledger->ledger_dr = $activeSheet->getCell('Q'.$i)->getFormattedValue();
-                $memberledger->net_balance = $activeSheet->getCell('R'.$i)->getFormattedValue();
-                $memberledger->is_closing_balance = 1;
-                $memberledger->save();
-            }
-        endfor;
+            endfor;
+        endif;
     }
     public function show_ledger_member(Request $request)
     {

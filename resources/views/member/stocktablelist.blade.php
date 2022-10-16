@@ -94,7 +94,7 @@
                                         <td>{{ $onetransection->opening_balance }}</td>
                                         <td>{{ $onetransection->closing_balance }}</td>
                                         <td>{{ $onetransection->time }}</td>
-                                        <td>{{ $onetransection->brokrage  }}</td>
+                                        <td>{{ round($onetransection->brokrage,2)  }}</td>
                                         <td>{{ $onetransection->member_code }}</td>
                                         <td><a class="btn btn-primary btn-sm" href="{{ route('update_single_stock',['stock_id' => Crypt::encryptString($onetransection->id) ]) }}"><i class="fas fa-edit"></i></a></td>
                                     </tr>

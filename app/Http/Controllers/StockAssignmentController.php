@@ -89,8 +89,12 @@ class StockAssignmentController extends Controller
         $spreadsheet_array = $activeSheet->toArray();
         unset($spreadsheet_array[0]);unset($spreadsheet_array[1]);unset($spreadsheet_array[2]);unset($spreadsheet_array[3]);
         $member = \App\Member::where('member_code',$member_code)->first();
-        $member->opening_quantity = $activeSheet->getCell('C2')->getFormattedValue();$member->ledger_size = $activeSheet->getCell('D2')->getFormattedValue();
-        $member->opning_balance = $activeSheet->getCell('E2')->getFormattedValue();$member->save();
+        if (!empty($member)) :
+            $member->opening_quantity = $activeSheet->getCell('C2')->getFormattedValue();
+            $member->ledger_size = $activeSheet->getCell('D2')->getFormattedValue();
+            $member->opning_balance = $activeSheet->getCell('E2')->getFormattedValue();
+            $member->save();
+        endif;
         if (!empty($member)) {
             $member_id = $member->id;
         } else {
