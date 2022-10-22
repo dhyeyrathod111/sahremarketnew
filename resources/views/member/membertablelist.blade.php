@@ -75,6 +75,7 @@
                                                 Edit
                                             </a>
                                             <button usermemebercode="{{ $onemember->member_code }}" class="btn btn-danger btn-sm" onclick="confirmation(this)" responseurl="{{ route('delete_member',['member_id'=>$onemember->id]) }}">Delete</button>
+                                            <a target="_blank" href="{{ route('show_ledger_member',['member_id'=>$onemember->id]) }}" class="btn btn-warning btn-sm">View Ledger</a>
                                         </td>
                                     </tr>
                                     @endforeach

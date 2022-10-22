@@ -61,7 +61,11 @@ class MemberledgerController extends Controller
     }
     public function show_ledger_member(Request $request)
     {
-        $member = $member = \App\Member::find($request->session()->get('member_id'));
+        if (!empty($request->member_id)) {
+            $member = \App\Member::find($request->member_id);
+        } else {
+            $member = \App\Member::find($request->session()->get('member_id'));
+        }
         $this->data['member'] = $member;
         $this->data['ledgerdata'] = \App\Memberledger::where(['member_id' => $member->id,'is_closing_balance' => 0])->get();
         $this->data['closing_balance'] = \App\Memberledger::where(['member_id' => $member->id,'is_closing_balance' => 1])->first();
