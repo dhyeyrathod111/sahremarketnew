@@ -123,7 +123,7 @@ class StockAssignmentController extends Controller
                 $newtransection->closing_balance = $activeSheet->getCell('J'.$excelKeyStart)->getFormattedValue();
                 $newtransection->time = $activeSheet->getCell('K'.$excelKeyStart)->getFormattedValue();
                 $brokrage_cleaner = $activeSheet->getCell('L'.$excelKeyStart)->getFormattedValue();
-                $newtransection->brokrage = str_replace("₹","",str_replace(" ","",$brokrage_cleaner));
+                $newtransection->brokrage = str_replace("₹","",str_replace(" ","",str_replace(",","",$brokrage_cleaner)));
                 $newtransection->member_code = $member_code;
                 $trade_id = $activeSheet->getCell('B'.$excelKeyStart)->getFormattedValue();
                 try {
