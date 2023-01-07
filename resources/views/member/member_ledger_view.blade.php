@@ -53,7 +53,7 @@
                                         <tr class="headerfootercolor">
                                         	<td></td>
                                         	<td>Closing Balance : </td>
-                                        	<td>{{ $closing_balance->ledger_cr }}</td>
+                                        	<td></td>
                                         	<td>{{ $closing_balance->ledger_dr }}</td>
                                         	<td>{{ $closing_balance->net_balance }}</td>
                                         </tr>

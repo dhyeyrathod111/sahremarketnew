@@ -122,7 +122,8 @@ class StockAssignmentController extends Controller
                 $newtransection->opening_balance = $activeSheet->getCell('I'.$excelKeyStart)->getFormattedValue();
                 $newtransection->closing_balance = $activeSheet->getCell('J'.$excelKeyStart)->getFormattedValue();
                 $newtransection->time = $activeSheet->getCell('K'.$excelKeyStart)->getFormattedValue();
-                $newtransection->brokrage = $activeSheet->getCell('L'.$excelKeyStart)->getFormattedValue();
+                $brokrage_cleaner = $activeSheet->getCell('L'.$excelKeyStart)->getFormattedValue();
+                $newtransection->brokrage = str_replace("₹","",str_replace(" ","",$brokrage_cleaner));
                 $newtransection->member_code = $member_code;
                 $trade_id = $activeSheet->getCell('B'.$excelKeyStart)->getFormattedValue();
                 try {
@@ -233,7 +234,7 @@ class StockAssignmentController extends Controller
             $newtransection->amount = $request->amount;
             $newtransection->closing_balance = $request->closing_balance;
             $newtransection->time = $request->time;
-            $newtransection->brokrage = $request->brokrage;
+            $newtransection->brokrage = str_replace("₹","",str_replace(" ","",$request->brokrage));
             if ($newtransection->save()) {
                 $this->response['status'] = TRUE;
                 $this->response['message'] = 'Data Update successfully.';
