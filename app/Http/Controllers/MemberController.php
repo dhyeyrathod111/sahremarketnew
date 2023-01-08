@@ -51,11 +51,12 @@ class MemberController extends Controller
                 $newmember = \App\Member::find($request->member_id);
             } else {
                 $newmember = new \App\Member;
-                if (\App\Member::where('member_code',$request->member_code)->count() > 0) {
+                if (\App\Member::where('member_code',trim($request->member_code))->count() > 0) {
                     $this->response['status'] = FALSE;
-                    $this->response['message'] = 'This member code is already in use';
+                    $this->response['message'] = 'This member code is already in use.';
                     return response($this->response, 200)->header('Content-Type', 'application/json');exit();
                 }
+                $newmember->member_code = $request->member_code;
             }
             $member_image = $request->file('member_image');
             if (!empty($member_image) && $member_image != NULL) {
@@ -64,7 +65,6 @@ class MemberController extends Controller
             $newmember->firstname = $request->firstname;
             $newmember->lastname = $request->lastname;
             $newmember->email = $request->email;
-            $newmember->member_code = $request->member_code;
             $newmember->password = $request->password;
             $newmember->contact = $request->contact;
             $newmember->remember_token = strtoupper(\Str::random(20));

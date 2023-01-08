@@ -76,7 +76,7 @@
                             @if(!empty($post_mamber))
                                 <input type="hidden" value="{{ $post_mamber->id }}" name="member_id">
                             @endif
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-primary submitbutton" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
             submitHandler: function(form) {
                 var form = $('#add_new_member')[0];
                 var form_data = new FormData(form);
-                $('#preloader').fadeIn();
+                $('#preloader').fadeIn();$('.submitbutton').prop('disabled', true);
                 $.ajax({
                     type: "POST",
                     url: $(form).attr('action'),
@@ -124,11 +124,11 @@
                                 window.location.href = response.redirect_url;
                             }, 2500);
                         } else {
-                            notify_error(response.message);
+                            notify_error(response.message);$('.submitbutton').prop('disabled', false);
                         }
                     },
                     error: response => {
-                        $('#preloader').fadeOut();console.log(response);notify_error();
+                        $('#preloader').fadeOut();console.log(response);notify_error();$('.submitbutton').prop('disabled', false);
                     }
                 });
             },
