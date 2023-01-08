@@ -118,9 +118,9 @@ class StockAssignmentController extends Controller
                 $newtransection->stock_entry = $activeSheet->getCell('E'.$excelKeyStart)->getFormattedValue();
                 $newtransection->stock_exit = $activeSheet->getCell('F'.$excelKeyStart)->getFormattedValue();
                 $newtransection->net_exit = $activeSheet->getCell('G'.$excelKeyStart)->getFormattedValue();
-                $newtransection->amount = $activeSheet->getCell('H'.$excelKeyStart)->getFormattedValue();
-                $newtransection->opening_balance = $activeSheet->getCell('I'.$excelKeyStart)->getFormattedValue();
-                $newtransection->closing_balance = $activeSheet->getCell('J'.$excelKeyStart)->getFormattedValue();
+                $newtransection->amount = str_replace(" ", "",$activeSheet->getCell('H'.$excelKeyStart)->getFormattedValue());
+                $newtransection->opening_balance = str_replace(" ", "", $activeSheet->getCell('I'.$excelKeyStart)->getFormattedValue());
+                $newtransection->closing_balance = str_replace(" ", "", $activeSheet->getCell('J'.$excelKeyStart)->getFormattedValue());
                 $newtransection->time = $activeSheet->getCell('K'.$excelKeyStart)->getFormattedValue();
                 $brokrage_cleaner = $activeSheet->getCell('L'.$excelKeyStart)->getFormattedValue();
                 $newtransection->brokrage = str_replace("₹","",str_replace(" ","",str_replace(",","",$brokrage_cleaner)));

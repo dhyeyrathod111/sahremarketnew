@@ -16,7 +16,7 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         if (!$request->session()->has('member_id')) return redirect()->route('login');
-        $this->data['members'] = \App\Member::where('is_admin',0)->get();
+        $this->data['members'] = \App\Member::all();
         return view('member.membertablelist',$this->data);
     }
     /**

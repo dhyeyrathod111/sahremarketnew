@@ -10,9 +10,6 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 p-0">
                     <div class="card">
-                        <!-- <h3 class="card-header">
-                            Ledger
-                        </h3> -->
                         <div class="card-body p-0">      
                             <div class="table-responsive">
                                 <table id="stock_table" class="table table-striped table-bordered">
@@ -33,7 +30,7 @@
                                         </tr>
                                         <tr>
                                             <th style="background: #011e58; color: white">Date</th>
-                                            <th style="background: #011e58; color: white">Name</th>
+                                            <th style="background: #011e58; color: white">Transaction Description</th>
                                             <th style="background: #011e58; color: white">Ledger Credit</th>
                                             <th style="background: #011e58; color: white">Ledger Debit</th>
                                             <th style="background: #011e58; color: white">Net Balance</th>
@@ -44,18 +41,18 @@
                                         <tr>
                                         	<td>{{ $oneledger->date }}</td>
                                         	<td>{{ $oneledger->name }}</td>
-                                        	<td>{{ $oneledger->ledger_cr }}</td>
-                                        	<td>{{ $oneledger->ledger_dr }}</td>
-                                        	<td>{{ $oneledger->net_balance }}</td>
+                                        	<td>{{ str_replace(" ", "", $oneledger->ledger_cr) }}</td>
+                                        	<td>{{ str_replace(" ", "", $oneledger->ledger_dr) }}</td>
+                                        	<td>{{ str_replace(" ", "", $oneledger->net_balance) }}</td>
                                         </tr>
                                         @endforeach
                                         @if(!empty($closing_balance))
                                         <tr class="headerfootercolor">
                                         	<td></td>
                                         	<td>Closing Balance : </td>
-                                        	<td></td>
-                                        	<td>{{ $closing_balance->ledger_dr }}</td>
-                                        	<td>{{ $closing_balance->net_balance }}</td>
+                                        	<td>{{ str_replace(" ", "", $closing_balance->ledger_cr) }}</td>
+                                        	<td>{{ str_replace(" ", "", $closing_balance->ledger_dr) }}</td>
+                                        	<td>{{ str_replace(" ", "", $closing_balance->net_balance) }}</td>
                                         </tr>
                                         @endif
                                     </tbody>

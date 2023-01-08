@@ -53,8 +53,6 @@
                 <th style="background: #011e58; color: white">Amount</th>
                 <th style="background: #011e58; color: white">Opening Balance</th>
                 <th style="background: #011e58; color: white">Closing Balance</th>
-                <!-- <th>time</th> -->
-                <!-- <th>brokrage</th> -->
             </tr>
         </thead>
         <tbody>

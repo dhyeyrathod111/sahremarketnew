@@ -106,7 +106,7 @@
                                                 <td>{{ $onetransection->opening_balance }}</td>
                                                 <td>{{ $onetransection->closing_balance }}</td>
                                                 <td>{{ $onetransection->time }}</td>
-                                                <td>{{ $onetransection->brokrage }}</td>
+                                                <td>{{ "₹".$onetransection->brokrage }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
