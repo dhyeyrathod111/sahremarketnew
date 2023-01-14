@@ -28,11 +28,12 @@ class MemberledgerController extends Controller
         $member = \App\Member::where('member_code',$oneSpreadsheet)->first();
         if (!empty($member)) :
             for ($i=1; $i < $getHighestRow; $i++) : 
-                $ledgerdate = trim($activeSheet->getCell('N'.$i)->getFormattedValue());
-                if (!empty($ledgerdate) && str_contains($ledgerdate,'/')) :
-                    $ledgerdate = explode("/", trim( $activeSheet->getCell('N'.$i)->getFormattedValue() ));
-                    if (!empty($ledgerdate[2])) {
-                        $finalDateString = $ledgerdate[2]."-".$ledgerdate[0]."-".$ledgerdate[1];$finalDateString = date('Y-m-d', strtotime($finalDateString));
+                $ledgerdate = explode("/", trim( $activeSheet->getCell('N'.$i)->getFormattedValue() ));
+
+                if (!empty($ledgerdate) && count($ledgerdate) == 3) :
+                    if (is_numeric($ledgerdate[0]) && is_numeric($ledgerdate[1]) && is_numeric($ledgerdate[2])) {
+                        $finalDateString = $ledgerdate[0]."-".$ledgerdate[1]."-".$ledgerdate[2];
+                        $finalDateString = date('Y-m-d H:i:s', strtotime($finalDateString));
                     } else {
                         $finalDateString = NULL;
                     }
@@ -46,6 +47,7 @@ class MemberledgerController extends Controller
                     $memberledger->is_closing_balance = 0;
                     $memberledger->save();
                 endif;
+
                 $closing_balance_row = trim($activeSheet->getCell('O'.$i)->getFormattedValue());
                 if (str_contains($closing_balance_row,'Closing Balance') || str_contains($closing_balance_row,'closing balance')) {
                     $memberledger = new Memberledger;

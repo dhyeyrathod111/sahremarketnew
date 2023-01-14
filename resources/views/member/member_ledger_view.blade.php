@@ -39,7 +39,7 @@
                                     <tbody>
                                         @foreach($ledgerdata as $oneledger)
                                         <tr>
-                                        	<td>{{ $oneledger->date }}</td>
+                                        	<td>{{  date('d-m-Y', strtotime($oneledger->date))  }}</td>
                                         	<td>{{ $oneledger->name }}</td>
                                         	<td>{{ str_replace(" ", "", $oneledger->ledger_cr) }}</td>
                                         	<td>{{ str_replace(" ", "", $oneledger->ledger_dr) }}</td>
