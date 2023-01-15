@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-
 	<style>
     table,
     th,
@@ -19,8 +15,7 @@
     </style>
 </head>
 <body>
-	<img class="img-fluid w-100" src="{{ asset('public/assets/images/banner_pdf_file.png') }}">
-
+	<img style="width: 100%;height: 75px" src="{{ asset('public/assets/images/banner_pdf_file.png') }}">
     <table style="border: none;width: 100%">
         @if(!empty($member))
             <tr style="border: none;text-align: center; background: #ffd966">
@@ -75,11 +70,11 @@
                 <td> </td>
                 <td> Total </td>
                 <td> </td>
-                <td> {{ $calculation->quantity }} </td>
+                <td> </td>
                 <td> </td>
                 <td> </td>
                 <td> {{ round($calculation->net_exit,2) }} </td>
-                <td> {{ round($calculation->amount,2) }} </td>
+                <td> {{ "₹".round($calculation->amount,2) }} </td>
                 <td> </td>
                 <td> </td>
             </tr>
@@ -87,22 +82,21 @@
         </tbody>
     </table>
     
-
-    <table style="border: 2px solid black;width: 100%;">
+    <table style="border: 1px solid black;width: 100%;">
         <tr style="border: none;">
-            <td style="border: none;padding: 0px;font-size: small">*Merely Individual Entity Being Acknowleged as Valid Ledger Client</td>
+            <td style="border: none;padding: 0px;font-size: 7px;">*Merely Individual Entity Being Acknowleged as Valid Ledger Client</td>
         </tr>
         <tr style="border: none;">
-            <td style="border: none;padding: 0px;font-size: small">*Long term Debits shall be levy Anually Intrest @18%</td>
+            <td style="border: none;padding: 0px;font-size: 7px;">*Long term Debits shall be levy Anually Intrest @18%</td>
         </tr>
         <tr style="border: none;">
-            <td style="border: none;padding: 0px;font-size: small">*Proton Code is Higly Classified, Company shall not responsible for misuses from client side</td>
+            <td style="border: none;padding: 0px;font-size: 7px;">*Proton Code is Higly Classified, Company shall not responsible for misuses from client side</td>
         </tr>
         <tr style="border: none;">
-            <td style="border: none;padding: 0px;font-size: small">*Any Error in Ledger should be notify within Seven Uk Working Days</td>
+            <td style="border: none;padding: 0px;font-size: 7px;">*Any Error in Ledger should be notify within Seven Uk Working Days</td>
         </tr>
         <tr style="border: none;">
-            <td style="border: none;padding: 0px;font-size: small">*Computer generated bill/Ledger carries no signature</td>
+            <td style="border: none;padding: 0px;font-size: 7px;">*Computer generated bill/Ledger carries no signature</td>
         </tr>
     </table>
 

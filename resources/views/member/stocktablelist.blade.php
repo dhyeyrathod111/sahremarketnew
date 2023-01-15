@@ -104,7 +104,7 @@
                                             <td> </td>
                                             <td> Total </td>
                                             <td> </td>
-                                            <td> {{ $calculation->quantity }} </td>
+                                            <td> </td>
                                             <td> </td>
                                             <td> </td>
                                             <td> {{ round($calculation->net_exit,2) }} </td>
