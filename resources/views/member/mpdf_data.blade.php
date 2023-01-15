@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-	<img style="width: 100%;height: 75px" src="{{ asset('public/assets/images/banner_pdf_file.png') }}">
+	<img style="width: 100%;height: 120px" src="{{ asset('public/assets/images/banner_pdf_file.png') }}">
     <table style="border: none;width: 100%">
         @if(!empty($member))
             <tr style="border: none;text-align: center; background: #ffd966">

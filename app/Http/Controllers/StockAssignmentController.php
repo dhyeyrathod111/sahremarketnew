@@ -167,7 +167,7 @@ class StockAssignmentController extends Controller
     }
     public function download_excel_admin(Request $request)
     {
-        $mpdf = new \Mpdf\Mpdf();
+        $mpdf = new \Mpdf\Mpdf(['orientation' => 'L']);
         $stockAssignment = \App\StockAssignment::where('is_active',1);
         if (!empty($request->member_select) && $request->member_select != '') {
             $stockAssignment->whereIn('member_code',$request->member_select);

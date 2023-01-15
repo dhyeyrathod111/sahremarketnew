@@ -71,7 +71,15 @@ class MemberledgerController extends Controller
         $this->data['member'] = $member;
         $this->data['ledgerdata'] = \App\Memberledger::where(['member_id' => $member->id,'is_closing_balance' => 0])->get();
         $this->data['closing_balance'] = \App\Memberledger::where(['member_id' => $member->id,'is_closing_balance' => 1])->first();
-        return view('member.member_ledger_view',$this->data);
+
+        if ($request->download == 1) {
+            $html = view('member.mpdf_ledger_member',$this->data)->render();
+            $mpdf = new \Mpdf\Mpdf(['orientation' => 'L']);
+            $fileName = "Ledger_".$member->member_code."_".date('d-m-Y', time());
+            $mpdf->WriteHTML($html);$mpdf->Output($fileName.".pdf",'D');
+        } else {
+            return view('member.member_ledger_view',$this->data);
+        }
     }
     public function brokerage_calculation(Request $request)
     {

@@ -68,7 +68,7 @@ class DashboardController extends Controller
     public function download_excel(Request $request)
     {
         if (!$request->session()->has('member_id')) return redirect()->route('login');
-        $mpdf = new \Mpdf\Mpdf();
+        $mpdf = new \Mpdf\Mpdf(['orientation' => 'L']);
         if (!empty($request->member_id) && $request->member_id != '') {
             $member = \App\Member::find($request->member_id);
         } else {

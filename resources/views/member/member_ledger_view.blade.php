@@ -19,7 +19,9 @@
                                             <th style="background: #fcdb68">Proton code</th>
                                             <th style="background: #fcdb68">Opning Qty</th>
                                             <th style="background: #fcdb68">Ledger Size</th>
-                                            <th style="background: #fcdb68">Opning Bal</th>
+                                            <th style="background: #fcdb68">Opning Bal
+                                                <a href="{{ route('show_ledger_member',[ 'download' => TRUE]) }}" class="float-right btn btn-primary btn-sm p-1">Download</a>
+                                            </th>
                                         </tr>
                                         <tr>
                                             <th style="background: #af9b20;color: white">{{ $member->member_code }}</th>
