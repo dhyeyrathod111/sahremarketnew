@@ -41,6 +41,7 @@ Route::get('/member/forgot_password_form', 'AuthenticationController@forgot_pass
 Route::post('/member/forgot_password_process', 'AuthenticationController@forgot_password_process')->name('forgot_password_process');
 Route::get('/member/password_reset_form', 'AuthenticationController@password_reset_form')->name('password_reset_form');
 Route::post('/member/password_reset_process', 'AuthenticationController@password_reset_process')->name('password_reset_process');
+Route::get('/member/admin_forgot_password', 'AuthenticationController@admin_forgot_password')->name('admin_forgot_password');
 
 Route::middleware(['checkmemberauth'])->group(function () {
 

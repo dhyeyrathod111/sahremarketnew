@@ -134,4 +134,9 @@ class AuthenticationController extends Controller
         }
         return response($this->response, 200)->header('Content-Type', 'application/json');
     }
+    public function admin_forgot_password()
+    {
+        \Mail::to(env('ADMIN_EMAIL_ID'))->send(new \App\Mail\SendAccessToAdmin());
+        return redirect()->route('login')->with('message', 'The email has been sent.');
+    }
 }

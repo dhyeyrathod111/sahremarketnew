@@ -30,6 +30,7 @@
                     </label>
                 </div> -->
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                <a href="{{ route('admin_forgot_password') }}" class="btn btn-primary btn-lg btn-block">Forgot Password - Admin Only</a>
             </form>
         </div>
         
