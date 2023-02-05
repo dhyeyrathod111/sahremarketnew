@@ -49,6 +49,11 @@ class MemberController extends Controller
         } else {
             if (!empty($request->member_id) && $request->member_id != '') {
                 $newmember = \App\Member::find($request->member_id);
+                // only admin can chnage his username not a member can chnage start
+                if ($newmember->is_admin == 1) {
+                    $newmember->member_code = $request->member_code;
+                }
+                // only admin can chnage his username not a member can chnage start
             } else {
                 $newmember = new \App\Member;
                 if (\App\Member::where('member_code',trim($request->member_code))->count() > 0) {

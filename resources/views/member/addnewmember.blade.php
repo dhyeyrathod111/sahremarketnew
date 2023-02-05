@@ -62,7 +62,7 @@
 
                             <div class="form-group">
                                 <label class="col-form-label">Member Code:</label>
-                                <input type="text" {{ !empty($post_mamber) ? 'readonly' : '' }} value="{{ !empty($post_mamber->member_code) ? $post_mamber->member_code : '' }}" name="member_code" class="form-control">
+                                <input type="text" value="{{ !empty($post_mamber->member_code) ? $post_mamber->member_code : '' }}" name="member_code" class="form-control">
                             </div>
 
                             <div class="form-group">
