@@ -51,16 +51,20 @@ class DashboardController extends Controller
             $this->response['status'] = FALSE;
             $this->response['message'] = implode("<br />",$validator->messages()->all());
         } else {
-            $help_center = new \App\help_center;
-            $help_center->member_id = $request->session()->get('member_id');
-            $help_center->subject = $request->subject;$help_center->message = $request->message;
-            if ($help_center->save()) {
+            $emailpayload = [
+                'subject' => $request->subject,
+                'msg' => $request->message,
+                'member_code' => $request->session()->get('member_code'),
+                'member_email' => $request->session()->get('member_email'),
+            ];
+            try {
+                \Mail::to(env('ADMIN_EMAIL_ID'))->send(new \App\Mail\Helpcenter($emailpayload));
                 $this->response['status'] = TRUE;
                 $this->response['message'] = "Your complain has been submited.";
                 $this->response['redirect_url'] = route('help_center');
-            } else {
+            } catch (\Exception $exception) {
                 $this->response['status'] = FALSE;
-                $this->response['message'] = "Something went wrong";
+                $this->response['message'] = $exception->getMessage();
             }
         }
         return response($this->response, 200)->header('Content-Type','application/json');
