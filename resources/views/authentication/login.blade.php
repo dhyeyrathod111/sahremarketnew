@@ -5,9 +5,9 @@
 <div class="splash-container">
     <div class="card ">
         <div class="card-header text-center">
-            <h2>Sign in</h2>
-            <!-- <a href="{{ route('login') }}"><img class="logo-img" src="{{ asset('public/assets/images/logo.png') }}" alt="logo"></a> -->
-            <span class="splash-description">Please enter your information.</span>
+            {{-- <h2>Sign in</h2> --}}
+            <a href="{{ route('login') }}"><img class="logo-img" style="width: 300px;height: 200px" src="{{ asset('public/assets/images/logo.png') }}" alt="logo"></a>
+            {{-- <span class="splash-description">cj enterprises.</span> --}}
         </div>
         <div class="card-body">
             <div id="alert_message"></div>
